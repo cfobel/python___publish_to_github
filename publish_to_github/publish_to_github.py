@@ -25,7 +25,7 @@ Publish git repo in current path to github.""",
     return args
 
 
-if __name__ == '__main__':
+def main():
     args = parse_args()
     print args.github_remote
 
