@@ -15,6 +15,8 @@ def parse_args():
     parser = ArgumentParser(description="""\
 Publish git repo in current path to github.""",
                            )
+    parser.add_argument('-u', '--username', dest='username', type=str,
+            required=True)
     parser.add_argument('-p', '--path', dest='repo_path', type=str)
     parser.add_argument('-n', '--name', dest='repo_name', type=str)
     parser.add_argument(nargs='?', dest='github_remote', type=str, default='github')
@@ -34,8 +36,10 @@ if __name__ == '__main__':
     if args.repo_name is None:
         args.repo_name = cwd.name
 
-    cmd1 = '''curl -u cfobel https://api.github.com/user/repos -d '{"name": "%s"}' ''' % args.repo_name
-    cmd2 = '''git remote add %s git@github.com:cfobel/%s.git''' % (args.github_remote, args.repo_name)
+    cmd1 = '''curl -u %s https://api.github.com/user/repos '''\
+            '''-d '{"name": "%s"}' ''' % (args.username, args.repo_name)
+    cmd2 = '''git remote add %s git@github.com:%s/%s.git''' % (args.username,
+            args.github_remote, args.repo_name)
     cmd3 = '''git push -u %s master''' % (args.github_remote)
     cmd4 = '''git pull %s''' % (args.github_remote)
 
