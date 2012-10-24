@@ -21,7 +21,7 @@ Publish git repo in current path to github.""",
     parser.add_argument('-n', '--name', dest='repo_name', type=str)
     parser.add_argument(nargs='?', dest='github_remote', type=str, default='github')
     args = parser.parse_args()
-    
+
     return args
 
 
@@ -38,8 +38,8 @@ def main():
 
     cmd1 = '''curl -u %s https://api.github.com/user/repos '''\
             '''-d '{"name": "%s"}' ''' % (args.username, args.repo_name)
-    cmd2 = '''git remote add %s git@github.com:%s/%s.git''' % (args.username,
-            args.github_remote, args.repo_name)
+    cmd2 = '''git remote add %s git@github.com:%s/%s.git''' % (
+            args.github_remote, args.username, args.repo_name)
     cmd3 = '''git push -u %s master''' % (args.github_remote)
     cmd4 = '''git pull %s''' % (args.github_remote)
 
